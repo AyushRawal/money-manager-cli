@@ -9,8 +9,8 @@ database = Database()
 table = prettytable.PrettyTable()
 
 while (True):
-    expenditure = Database.getTotalByType(database, "Expense")
-    total_income = Database.getTotalByType(database ,"Income")
+    expenditure = Database.getTotal(database, "type='Expense'")
+    total_income = Database.getTotal(database ,"type='Income'")
 
     system("clear")
     table.header = False
@@ -35,10 +35,9 @@ while (True):
     elif(choice == '2'):
         transactions.addIncome(database)
     elif (choice == '3'):
-        transactions.viewTransactionsByType(database, "Expense")
-        input()
+        transactions.viewExpenses(database)
     elif(choice == '4'):
-        transactions.viewTransactionsByType(database, "Income")
+        transactions.viewIncomes(database)
         input()
     else:
         exit(0)

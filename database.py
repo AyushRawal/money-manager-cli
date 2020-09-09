@@ -49,14 +49,14 @@ class Database:
         self.cursor.execute("DELETE FROM {} WHERE id={}".format(self.TableName, ID))
         self.connection.commit()
 
-    def getAllTransactionsByType(self, Type):
+    def getAllTransactions(self, filters="type='Expense' OR type='Income'"):
         transactions = []
-        for transaction in self.cursor.execute("SELECT * FROM {} WHERE type='{}'".format(self.TableName, Type)):
+        for transaction in self.cursor.execute("SELECT * FROM {} WHERE {}".format(self.TableName, filters)):
             transactions.append(transaction)
         return transactions
 
-    def getTotalByType(self, Type):
+    def getTotal(self, filters):
         transactions = []
-        for transaction in self.cursor.execute("SELECT amount FROM {} WHERE type='{}'".format(self.TableName, Type)):
+        for transaction in self.cursor.execute("SELECT amount FROM {} WHERE {}".format(self.TableName, filters)):
             transactions.append(transaction[0])
         return sum(transactions)
