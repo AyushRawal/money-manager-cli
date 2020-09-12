@@ -10,7 +10,7 @@ table = prettytable.PrettyTable()
 
 while (True):
     expenditure = Database.getTotal(database, "type='Expense'")
-    total_income = Database.getTotal(database ,"type='Income'")
+    total_income = Database.getTotal(database, "type='Income'")
 
     system("clear")
     table.header = False
@@ -20,24 +20,21 @@ while (True):
     table.add_row(["Money left : ", total_income - expenditure])
     print(table)
 
-    print(
-        "\n1. Add Expense\
+    print("\n1. Add Expense\
         \n2. Add Income\
         \n3. View Expenses\
         \n4. View Incomes\
-        \n0. Exit"
-    )
+        \n0. Exit")
 
     choice = input("\n> ")
 
-    if(choice == '1'):
+    if (choice == '1'):
         transactions.addExpense(database)
-    elif(choice == '2'):
+    elif (choice == '2'):
         transactions.addIncome(database)
     elif (choice == '3'):
         transactions.viewExpenses(database)
-    elif(choice == '4'):
+    elif (choice == '4'):
         transactions.viewIncomes(database)
-        input()
     else:
         exit(0)
