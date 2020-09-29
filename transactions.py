@@ -38,6 +38,24 @@ def addExpense(database):
                             categories[category_no], date, note)
 
 
+def addDebt(database):
+    system("clear")
+    amount = input("\nAmount : ")
+    date = datetime.now().strftime(time_format)
+    category = input("\nBorrowed from : ")
+    note = input("\nNote : ")
+    Database.addTransaction(database, amount, "Debt", category, date, note)
+
+
+def addLoan(database):
+    system("clear")
+    amount = input("\nAmount : ")
+    date = datetime.now().strftime(time_format)
+    category = input("\nLent to : ")
+    note = input("\nNote : ")
+    Database.addTransaction(database, amount, "Loan", category, date, note)
+
+
 def viewIncomes(database):
     system("clear")
     transactions = Database.getAllTransactions(database, "type='Income'")
@@ -113,3 +131,39 @@ def viewExpenses(database):
             break
 
         input()
+
+def viewDebts(database):
+    system("clear")
+    transactions = Database.getAllTransactions(database, "type='Debt'")
+
+    if transactions:
+        table = prettytable.PrettyTable()
+
+        table.field_names = ["Amount", "Borrowed from", "Date-Time", "Note"]
+        for transaction in transactions:
+            table.add_row([transaction[1], transaction[3], transaction[4],
+                    transaction[5]])
+
+        print(table)
+    else:
+        print("No transactions found.")
+
+    input()
+
+def viewLoans(database):
+    system("clear")
+    transactions = Database.getAllTransactions(database, "type='Loan'")
+
+    if transactions:
+        table = prettytable.PrettyTable()
+
+        table.field_names = ["Amount", "Lent to", "Date-Time", "Note"]
+        for transaction in transactions:
+            table.add_row([transaction[1], transaction[3], transaction[4],
+                    transaction[5]])
+
+        print(table)
+    else:
+        print("No transactions found.")
+
+    input()
