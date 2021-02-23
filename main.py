@@ -1,18 +1,16 @@
 #!/usr/bin/python3
 
-from database import Database
-import transactions
+import expense, income, loan, debt
 from os import system
 import prettytable
 
-database = Database()
 table = prettytable.PrettyTable()
 
 while (True):
-    expenditure = Database.getTotal(database, "type='Expense'")
-    total_income = Database.getTotal(database, "type='Income'")
-    total_lent_money = Database.getTotal(database, "type='Loan'")
-    total_borrowed_money = Database.getTotal(database, "type='Debt'")
+    expenditure = expense.total_expenditure()
+    total_income = income.total_income()
+    total_lent_money = loan.total_loan()
+    total_borrowed_money = debt.total_debt()
 
     system("clear")
     table.header = False
@@ -22,35 +20,46 @@ while (True):
     table.add_row(["Money Left : ", total_income - expenditure])
     table.add_row(["Total Lent Money : ", total_lent_money])
     table.add_row(["Total Borrowed Money : ", total_borrowed_money])
+    table.add_row(["Money at hand : ", total_income + total_borrowed_money - expenditure - total_lent_money])
     print(table)
 
-    print("\n1. Add Expense\
-        \n2. Add Income\
-        \n3. View Expenses\
-        \n4. View Incomes\
-        \n5. Add Loan\
-        \n6. Add Debt\
-        \n7. View Loans\
-        \n8. View Debts\
-        \n0. Exit")
+    print("\n01. Add Expense\
+        \n02. Add Income\
+        \n03. View Expenses\
+        \n04. View Incomes\
+        \n05. Add Loan\
+        \n06. Add Debt\
+        \n07. View Loans\
+        \n08. View Debts\
+        \n00. Exit")
+        # \n09. Settle debt\
+        # \n10. Settle loan\
 
     choice = input("\n> ")
+    try:
+        choice = int(choice)
+    except:
+        pass
 
-    if (choice == '1'):
-        transactions.addExpense(database)
-    elif (choice == '2'):
-        transactions.addIncome(database)
-    elif (choice == '3'):
-        transactions.viewExpenses(database)
-    elif (choice == '4'):
-        transactions.viewIncomes(database)
-    elif (choice == '5'):
-        transactions.addLoan(database)
-    elif (choice == '6'):
-        transactions.addDebt(database)
-    elif (choice == '7'):
-        transactions.viewLoans(database)
-    elif (choice == '8'):
-        transactions.viewDebts(database)
+    if (choice == 1):
+        expense.add_expense()
+    elif (choice == 2):
+        income.add_income()
+    elif (choice == 3):
+        expense.viewExpenses()
+    elif (choice == 4):
+        income.viewIncomes()
+    elif (choice == 5):
+        loan.add_loan()
+    elif (choice == 6):
+        debt.add_debt()
+    elif (choice == 7):
+        loan.viewLoans()
+    elif (choice == 8):
+        debt.viewDebts()
+    # elif (choice == 9):
+    #     pass
+    # elif (choice == 10):
+    #     pass
     else:
         exit(0)
