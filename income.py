@@ -29,17 +29,55 @@ def total_income():
 def get_all_incomes():
     return get_all_transactions(tablename)
 
-def viewIncomes():
+def view_incomes():
     system("clear")
     transactions = get_all_incomes()
-
     if transactions:
         table = prettytable.PrettyTable()
         table.field_names = ["ID", "Amount", "Date-Time", "Note"]
         for transaction in transactions:
             table.add_row([transaction[0], transaction[1], transaction[2], transaction[3]])
         print(table)
+        
+        print("\n01. Delete an Income")
+        print("02. Modify an Income")
+        print("00. Back to previous menu")
+        choice = input("\n> ")
+        try:
+            choice = int(choice)
+        except:
+            pass
+
+        if (choice == 1):
+            id = input("Enter ID : ")
+            try:
+                id = int(id)
+            except:
+                print("Invalid input")
+                input()
+                return
+            delete_income(id)
+
+        elif (choice == 2):
+            id = input("Enter ID : ")
+            try:
+                id = int(id)
+            except:
+                print("Invalid input")
+                input()
+                return
+            transaction = get_all_transactions(tablename, "WHERE rowid={}".format(id))[0]
+            print('\nIf no input is provided previous values will be taken.')
+            amount = input("\nAmount : ")
+            if (not amount):
+                amount = transaction[1]
+            note = input("\nNote : ")
+            if (not note):
+                note = transaction[3]
+            with conn:
+                curr.execute("UPDATE {} SET amount=:amount, note=:note WHERE rowid={}".format(tablename, id), {'amount': amount, 'note': note})
     else:
         print("No transactions found.")
+        input()
 
-    input()
+

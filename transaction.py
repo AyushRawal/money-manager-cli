@@ -11,14 +11,14 @@ def delete_transaction(tablename, id):
     with conn:
         curr.execute("DELETE FROM {} WHERE rowid=:id".format(tablename), {'id': id})
 
-def get_total(tablename):
+def get_total(tablename, filter=""):
     total = 0
-    curr.execute("SELECT amount FROM {}".format(tablename))
+    curr.execute("SELECT amount FROM {}".format(tablename + " " + filter))
     entries = curr.fetchall()
     for entry in entries:
         total += entry[0]
     return total
 
-def get_all_transactions(tablename):
-    curr.execute("SELECT rowid, * FROM {}".format(tablename))
+def get_all_transactions(tablename, filter=""):
+    curr.execute("SELECT rowid, * FROM {}".format(tablename + " " + filter))
     return curr.fetchall()

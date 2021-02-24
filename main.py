@@ -32,8 +32,6 @@ while (True):
         \n07. View Loans\
         \n08. View Debts\
         \n00. Exit")
-        # \n09. Settle debt\
-        # \n10. Settle loan\
 
     choice = input("\n> ")
     try:
@@ -46,20 +44,16 @@ while (True):
     elif (choice == 2):
         income.add_income()
     elif (choice == 3):
-        expense.viewExpenses()
+        expense.view_expenses()
     elif (choice == 4):
-        income.viewIncomes()
+        income.view_incomes()
     elif (choice == 5):
         loan.add_loan()
     elif (choice == 6):
         debt.add_debt()
     elif (choice == 7):
-        loan.viewLoans()
+        loan.view_loans()
     elif (choice == 8):
-        debt.viewDebts()
-    # elif (choice == 9):
-    #     pass
-    # elif (choice == 10):
-    #     pass
+        debt.view_debts()
     else:
         exit(0)
